@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Drop the Firewall
+/usr/bin/systemctl disable firewalld
+/usr/bin/systemctl stop firewalld
+
 # Clean the yum cache
 rm -fr /var/cache/yum/*
 /usr/bin/yum clean all
@@ -124,9 +128,11 @@ EOF
 # Initial r10k Deploy
 /usr/bin/r10k deploy environment -pv
 
+# Enable Puppet Agent and Server for future Puppet runs
+/usr/bin/systemctl start puppetserver
+
 # Do Initial Puppet Run
 /opt/puppetlabs/puppet/bin/puppet agent -t
 
-# Enable Puppet Agent and Server for future Puppet runs
-/usr/bin/systemctl start puppetserver
+# Enable Puppet Agent Daemon
 /usr/bin/systemctl start puppet

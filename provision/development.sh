@@ -5,7 +5,6 @@
 
 # Install Puppet Agent Components and Support Packages
 /usr/bin/yum -y install puppet-agent
-/usr/bin/systemctl enable puppet
 
 # Restart Networking to Pick Up New IP
 /usr/bin/systemctl restart network
@@ -20,4 +19,5 @@ EOF
 /opt/puppetlabs/puppet/bin/puppet agent -t
 
 # Start Puppet Daemon for future runs
+/usr/bin/systemctl enable  puppet
 /usr/bin/systemctl start puppet
